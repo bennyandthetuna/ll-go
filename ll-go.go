@@ -1,39 +1,77 @@
 package llgo
 
-//linked list implemented for a node container that holds string
+import "fmt"
+
+//linked list implemented for a node struct that holds string
 
 type Node struct {
-	value string
-	next  *Node
+	Value string
+	Next  *Node
 }
 
 type LinkedList struct {
-	head *Node
+	Head *Node
 }
 
-func (ll *LinkedList) findEndPointer() *Node {
-	if ll.head == nil {
-		return ll.head
+// loops through entirety of linked list to find the nil pointer at the end of the list
+func (ll *LinkedList) findEndItem() *Node {
+	if ll.Head == nil {
+		fmt.Print("head of list is empty!\n")
+		return ll.Head
 	} else {
-		current := ll.head
+		current := ll.Head
 
-		for current != nil {
-			current = current.next
+		for current.Next != nil {
+			current = current.Next
 		}
 		//and end of this loop, current should be the nil pointer at the end of the linked list
 		return current
 	}
 }
 
-func (ll *LinkedList) Add(value string) {
-	newNode := Node{
-		value: value,
-		next:  nil,
+// add string value to the end of the linked list
+func (ll *LinkedList) AddAtEnd(value string) {
+	newNode := &Node{
+		Value: value,
+	}
+	if ll.Head == nil {
+		ll.Head = newNode
+	} else {
+		current := ll.Head
+		for current.Next != nil {
+			current = current.Next
+		}
+		current.Next = newNode
 	}
 
-	endpointer := ll.findEndPointer()
+}
 
-	if endpointer == nil { //may as well double check that we actually have the ending nil pointer
-		endpointer = &newNode
+// deletes the node at the end of a linked list
+// returns true if operation was successful
+// returns false if operations was unsuccessful
+func (ll *LinkedList) DeleteAtEnd() bool {
+	if ll.Head == nil {
+		return false //no nodes in linked list, operation unsuccessful
+	} else {
+		current := ll.Head
+
+		for current.Next.Next != nil { //checking not the current next pointer in node, but peaking into the one ahead
+			//if current.next.next is nil, then that is  the last node in the linked list
+			current = current.Next
+		}
+		current = nil // by setting to nil, I'm removing all references to the last node, marking it for gc
+
+		return true
+
 	}
+}
+
+func (ll *LinkedList) PrintList() {
+	current := ll.Head
+	fmt.Print("Start of linked list\n")
+	for current != nil {
+		fmt.Printf("%s\n", current.Value)
+		current = current.Next
+	}
+	fmt.Print("End of linked list\n")
 }
