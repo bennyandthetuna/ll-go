@@ -56,10 +56,10 @@ func (ll *LinkedList) DeleteAtEnd() bool {
 		current := ll.Head
 
 		for current.Next.Next != nil { //checking not the current next pointer in node, but peaking into the one ahead
-			//if current.next.next is nil, then that is  the last node in the linked list
+			//of current.next.next is nil, then that is  the last node in the linked list
 			current = current.Next
 		}
-		current = nil // by setting to nil, I'm removing all references to the last node, marking it for gc
+		current.Next = nil // by setting to nil, I'm removing all references to the last node, marking it for gc
 
 		return true
 

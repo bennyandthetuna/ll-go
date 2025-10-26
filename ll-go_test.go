@@ -45,9 +45,16 @@ func TestDeleteAtEnd(t *testing.T) {
 	myLinkedList.AddAtEnd(value)
 	myLinkedList.AddAtEnd(value1)
 
-	myLinkedList.DeleteAtEnd()
+	result := myLinkedList.DeleteAtEnd()
 
-	if myLinkedList.Head.Value != value && myLinkedList.Head.Next != nil {
-		fmt.Print("AddAtEnd or DeleteAtEnd did not correctly run")
+	if result == false {
+		t.Error("node failed to delete")
+	}
+
+	if myLinkedList.Head.Value == value && myLinkedList.Head.Next == nil {
+		t.Log("Success")
+
+	} else {
+		t.Error("AddAtEnd or DeleteAtEnd did not correctly run")
 	}
 }
