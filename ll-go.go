@@ -29,6 +29,23 @@ func (ll *LinkedList) findEndItem() *Node {
 	}
 }
 
+// find string value within linked list and return position indexed from 0, returns -1 if value not found
+func (ll *LinkedList) FindValue(value string) int {
+
+	current := ll.Head
+	counter := 0
+	for current != nil {
+		if current.Value == value {
+			return counter
+		} else {
+			counter++
+			current = current.Next
+		}
+	}
+	//if you exit the loop without returning the counter, then return not found.
+	return -1
+}
+
 // add string value to the end of the linked list
 func (ll *LinkedList) AddAtEnd(value string) {
 	newNode := &Node{

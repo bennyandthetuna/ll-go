@@ -22,6 +22,23 @@ func TestFindEndPointer(t *testing.T) {
 
 }
 
+func TestFindValue(t *testing.T) {
+	value := "testing"
+	value1 := "also-testing"
+
+	myLinkedList := &LinkedList{}
+
+	myLinkedList.AddAtEnd(value)
+	myLinkedList.AddAtEnd(value1)
+
+	position := myLinkedList.FindValue(value1)
+	fmt.Printf("%d\n", position)
+
+	if position != 1 {
+		fmt.Print("Did not correctly find the value in the linked list.")
+	}
+}
+
 func TestAddAtEnd(t *testing.T) {
 	value := "testing"
 	value1 := "also-testing"
